@@ -2,17 +2,17 @@ package tk.zedlabs.statetest
 
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
+import javax.inject.Inject
 
-class MainRepository {
+class MainRepository @Inject constructor(
+    private val api: JsonApi
+) {
 
-    private val api = RetrofitService.createService(JsonApi::class.java)
-
-
-    val latestNews: Flow<List<Story>> = flow {
+    val latestNews: Flow<List<Story?>?> = flow {
         while (true){
             //val newList: MutableList<Story> = mutableListOf()
-            val newList = api.getStoryIdList()
-                .map { storyId -> api.getStory(storyId.toString()) }
+            val newList = api.getStoryIdList().body()
+                ?.map { storyId -> api.getStory(storyId.toString()).body() }
 
 //            .forEach { storyId ->
 //                newList.add(api.getStory(storyId.toString()))
