@@ -8,13 +8,16 @@ class MainRepository {
     private val api = RetrofitService.createService(JsonApi::class.java)
 
 
-    val latestNews: Flow<MutableList<Story>> = flow {
-        val newList: MutableList<Story> = mutableListOf()
+    val latestNews: Flow<List<Story>> = flow {
+        while (true){
+            //val newList: MutableList<Story> = mutableListOf()
+            val newList = api.getStoryIdList()
+                .map { storyId -> api.getStory(storyId.toString()) }
 
-        val latestNews = api.getStoryIdList()
-            .forEach { storyId ->
-                newList.add(api.getStory(storyId.toString()))
-            }
-        emit(newList)
+//            .forEach { storyId ->
+//                newList.add(api.getStory(storyId.toString()))
+//            }
+            emit(newList)
+        }
     }
 }
