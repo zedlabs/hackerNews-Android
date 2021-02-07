@@ -8,10 +8,13 @@ import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
+import tk.zedlabs.statetest.R
 import tk.zedlabs.statetest.databinding.ActivityMainBinding
 import tk.zedlabs.statetest.model.Story
 import tk.zedlabs.statetest.ui.webView.WebViewActivity
+import tk.zedlabs.statetest.util.isConnectedToNetwork
 import tk.zedlabs.statetest.util.makeFadeTransition
+import tk.zedlabs.statetest.util.showSnackBar
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity(), StoryListAdapter.OnItemClickListener {
@@ -21,6 +24,7 @@ class MainActivity : AppCompatActivity(), StoryListAdapter.OnItemClickListener {
     private val viewModel: MainViewModel by viewModels()
     private val storyAdapter = StoryListAdapter(this)
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -28,7 +32,16 @@ class MainActivity : AppCompatActivity(), StoryListAdapter.OnItemClickListener {
 
         setContentView(binding.root)
 
-        viewModel.loadInitialDetails()
+        when (this.isConnectedToNetwork()) {
+            true ->  viewModel.loadInitialDetails()
+            false -> {
+                binding.apply {
+                    root.showSnackBar(getString(R.string.no_connection))
+                    progressBar.visibility = View.GONE
+                }
+
+            }
+        }
 
         binding.recyclerView.apply {
             adapter = this@MainActivity.storyAdapter
@@ -40,6 +53,7 @@ class MainActivity : AppCompatActivity(), StoryListAdapter.OnItemClickListener {
 
     private fun observeViewState() {
         viewModel.storyListViewState.observe(this){
+
             it.stories?.let { storyList ->
                 //remove placeholder
                 binding.progressBar.visibility = View.GONE

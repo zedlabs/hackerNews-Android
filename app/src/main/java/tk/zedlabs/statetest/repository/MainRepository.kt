@@ -21,13 +21,15 @@ class MainRepository @Inject constructor(
         }
 
         //fetch the top 20 results from the api and parse it to the list
-        idList?.subList(0, 20)
+        idList
+            ?.subList(0, 20)
             ?.forEach {
                 val storyItem = api.getStory(it.toString()).body()
                 storyList.add(storyItem!!)
 
                 Log.e(" repository//fetching: ", "$storyItem")
             }
+
         emit(storyList)
     }
 
