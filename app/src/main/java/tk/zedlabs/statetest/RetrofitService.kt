@@ -5,11 +5,6 @@ import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 
-/**
-   TODO move this to DI if the project complexity increases to maintain single instance for multiple
-    API implementations
-**/
-
 object RetrofitService {
 
     private val logging = HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BASIC)

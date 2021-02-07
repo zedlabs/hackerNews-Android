@@ -4,7 +4,7 @@ import com.squareup.moshi.Json
 
 data class Story (
 
-    @field:Json(name = "id")  var by : String,
+    @field:Json(name = "by")  var by : String,
     @field:Json(name = "descendants") var descendants : Int,
     @field:Json(name = "id") var id : Int,
     @field:Json(name = "kids") var kids : List<Int>,

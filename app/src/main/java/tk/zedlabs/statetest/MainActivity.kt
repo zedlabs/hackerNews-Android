@@ -2,6 +2,7 @@ package tk.zedlabs.statetest
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
@@ -13,6 +14,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
 
     private val viewModel: MainViewModel by viewModels()
+    private val storyAdapter = StoryListAdapter()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -20,16 +22,27 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val slAdapter = StoryListAdapter()
+        viewModel.loadInitialDetails()
 
         binding.recyclerView.apply {
-            adapter = slAdapter
+            adapter = this@MainActivity.storyAdapter
             layoutManager = LinearLayoutManager(this@MainActivity)
         }
 
-        viewModel.storyList.observe(this){
-            slAdapter.submitList(it)
-        }
+        observeViewState()
+    }
 
+    private fun observeViewState() {
+        viewModel.storyListViewState.observe(this){
+            it.stories?.let { storyList ->
+                //remove placeholder
+                if(storyList.isNotEmpty()){
+                    binding.recyclerView.apply {
+                        adapter = storyAdapter.apply { submitList(storyList) }
+                    }
+                }
+                //else show some error message on the screen
+            }
+        }
     }
 }
