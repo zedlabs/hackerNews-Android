@@ -1,10 +1,11 @@
-package tk.zedlabs.statetest
+package tk.zedlabs.statetest.ui
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import tk.zedlabs.statetest.model.Story
 import tk.zedlabs.statetest.databinding.ListItemBinding
 
 class StoryListAdapter : ListAdapter<Story, StoryListAdapter.StoryListViewHolder>(DiffCallback()) {

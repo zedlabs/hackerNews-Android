@@ -1,11 +1,11 @@
-package tk.zedlabs.statetest
+package tk.zedlabs.statetest.repository
 
 import android.util.Log
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.*
-import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import tk.zedlabs.statetest.data.JsonApi
+import tk.zedlabs.statetest.model.Story
 import javax.inject.Inject
 
 class MainRepository @Inject constructor(

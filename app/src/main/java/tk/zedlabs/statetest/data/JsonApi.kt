@@ -1,8 +1,9 @@
-package tk.zedlabs.statetest
+package tk.zedlabs.statetest.data
 
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Path
+import tk.zedlabs.statetest.model.Story
 
 interface JsonApi {
 

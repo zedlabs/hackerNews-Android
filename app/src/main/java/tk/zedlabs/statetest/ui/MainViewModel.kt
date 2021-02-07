@@ -1,11 +1,11 @@
-package tk.zedlabs.statetest
+package tk.zedlabs.statetest.ui
 
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.*
 import kotlinx.coroutines.async
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
-import kotlin.coroutines.coroutineContext
+import tk.zedlabs.statetest.repository.MainRepository
 
 class MainViewModel @ViewModelInject constructor(
     private val repository: MainRepository

@@ -1,4 +1,4 @@
-package tk.zedlabs.statetest
+package tk.zedlabs.statetest.model
 
 import com.squareup.moshi.Json
 
