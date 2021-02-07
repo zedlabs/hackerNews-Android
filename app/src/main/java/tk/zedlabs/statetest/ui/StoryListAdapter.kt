@@ -11,7 +11,8 @@ import tk.zedlabs.statetest.util.formattedPosition
 import tk.zedlabs.statetest.util.pointsAndAuthorString
 import tk.zedlabs.statetest.util.stripUrl
 
-class StoryListAdapter : ListAdapter<Story, StoryListAdapter.StoryListViewHolder>(DiffCallback()) {
+class StoryListAdapter(private val listener: OnItemClickListener) :
+    ListAdapter<Story, StoryListAdapter.StoryListViewHolder>(DiffCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): StoryListViewHolder {
         val binding =
@@ -24,8 +25,14 @@ class StoryListAdapter : ListAdapter<Story, StoryListAdapter.StoryListViewHolder
         holder.bind(currentItem)
     }
 
-    class StoryListViewHolder(private val binding: ListItemBinding) :
+    inner class StoryListViewHolder(private val binding: ListItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
+
+        init {
+            binding.root.setOnClickListener {
+                listener.onItemClick(getItem(adapterPosition))
+            }
+        }
 
         fun bind(story: Story) {
             binding.apply {
@@ -37,11 +44,14 @@ class StoryListAdapter : ListAdapter<Story, StoryListAdapter.StoryListViewHolder
         }
     }
 
+    interface OnItemClickListener {
+        fun onItemClick(story: Story)
+    }
+
     class DiffCallback : DiffUtil.ItemCallback<Story>() {
 
         override fun areItemsTheSame(oldItem: Story, newItem: Story): Boolean =
             oldItem.id == newItem.id
-
 
         override fun areContentsTheSame(oldItem: Story, newItem: Story): Boolean =
             oldItem == newItem
