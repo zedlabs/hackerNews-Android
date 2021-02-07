@@ -7,6 +7,9 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import tk.zedlabs.statetest.model.Story
 import tk.zedlabs.statetest.databinding.ListItemBinding
+import tk.zedlabs.statetest.util.formattedPosition
+import tk.zedlabs.statetest.util.pointsAndAuthorString
+import tk.zedlabs.statetest.util.stripUrl
 
 class StoryListAdapter : ListAdapter<Story, StoryListAdapter.StoryListViewHolder>(DiffCallback()) {
 
@@ -26,7 +29,10 @@ class StoryListAdapter : ListAdapter<Story, StoryListAdapter.StoryListViewHolder
 
         fun bind(story: Story) {
             binding.apply {
-                binding.titleTextView.text = story.title
+                titleTextView.text = story.title
+                rankTextView.text = adapterPosition.formattedPosition()
+                linkTextView.text = story.url.stripUrl()
+                infoTextView.text = Pair(story.score, story.by).pointsAndAuthorString()
             }
         }
     }
