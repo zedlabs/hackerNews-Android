@@ -17,7 +17,7 @@
   
 #
 
-<img src="https://github.com/zedlabs/hackerNews-Android/blob/master/Screenshot_20210207-180921.png" width="200" height="400"> 
+<img src="https://github.com/zedlabs/hackerNews-Android/blob/master/sc01.png" width="200" height="400">
 
 
    
