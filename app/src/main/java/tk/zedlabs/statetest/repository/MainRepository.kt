@@ -26,11 +26,9 @@ class MainRepository @Inject constructor(
             ?.forEach {
                 val storyItem = api.getStory(it.toString()).body()
                 storyList.add(storyItem!!)
-
+                emit(storyList)
                 Log.e(" repository//fetching: ", "$storyItem")
             }
-
-        emit(storyList)
     }
 
 }

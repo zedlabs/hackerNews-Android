@@ -37,10 +37,11 @@ class MainViewModel @ViewModelInject constructor(
     private suspend fun loadStories() {
         repository.getLatestNewsList()
             .catch { exception ->
-                _storyListViewState.value?.apply { copy(error = Error(exception)) }
+                _storyListViewState.value = _storyListViewState.value?.copy(error = Error(exception))
+                exception.printStackTrace()
             }
             .collect { storiesList ->
-                _storyListViewState.value?.apply { copy(stories = storiesList) }
+                _storyListViewState.value = _storyListViewState.value?.copy(stories = storiesList)
             }
     }
 

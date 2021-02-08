@@ -12,8 +12,6 @@ import tk.zedlabs.statetest.R
 import tk.zedlabs.statetest.databinding.ActivityMainBinding
 import tk.zedlabs.statetest.model.Story
 import tk.zedlabs.statetest.ui.webView.WebViewActivity
-import tk.zedlabs.statetest.util.isConnectedToNetwork
-import tk.zedlabs.statetest.util.makeFadeTransition
 import tk.zedlabs.statetest.util.showSnackBar
 
 @AndroidEntryPoint
@@ -34,8 +32,6 @@ class MainActivity : AppCompatActivity(), StoryListAdapter.OnItemClickListener {
 
         viewModel.loadInitialDetails()
 
-        if (!this.isConnectedToNetwork())  noInternetConnection()
-
         binding.recyclerView.apply {
             adapter = this@MainActivity.storyAdapter
             layoutManager = LinearLayoutManager(this@MainActivity)
@@ -47,7 +43,7 @@ class MainActivity : AppCompatActivity(), StoryListAdapter.OnItemClickListener {
     private fun observeViewState() {
         viewModel.storyListViewState.observe(this) {
 
-            if (it.error != null) noInternetConnection()
+           if (it.error != null) noInternetConnection()
 
             it.stories?.let { storyList ->
                 //remove placeholder
@@ -55,7 +51,6 @@ class MainActivity : AppCompatActivity(), StoryListAdapter.OnItemClickListener {
                 /* load data to RV */
                 if (storyList.isNotEmpty()) {
                     binding.recyclerView.apply {
-                        this.makeFadeTransition(600)
                         adapter = storyAdapter.apply { submitList(storyList) }
                     }
                 } else {

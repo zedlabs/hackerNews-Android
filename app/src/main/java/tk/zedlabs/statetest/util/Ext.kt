@@ -34,12 +34,6 @@ fun Pair<Int, String>.pointsAndAuthorString(): String {
     return this.first.toString() + " points by " + this.second
 }
 
-fun Context.isConnectedToNetwork(): Boolean {
-    val manager = getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager?
-
-    return manager?.activeNetworkInfo?.isConnectedOrConnecting ?: false
-}
-
 fun View.showSnackBar(text: String) {
     Snackbar.make(
         this,
