@@ -4,7 +4,6 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
-import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
@@ -53,10 +52,7 @@ class MainActivity : AppCompatActivity(), StoryListAdapter.OnItemClickListener {
                     binding.recyclerView.apply {
                         adapter = storyAdapter.apply { submitList(storyList) }
                     }
-                } else {
-                    Toast.makeText(this, "Failed to Load Data", Toast.LENGTH_SHORT).show()
                 }
-
             }
         }
     }
