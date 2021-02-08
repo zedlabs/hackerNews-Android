@@ -94,6 +94,6 @@ dependencies {
     kapt "androidx.hilt:hilt-compiler:$hiltAndroidXVersion"
 
     // DataStore
-//r
+//    implementation "androidx.datastore:datastore-preferences:$dataStoreVersion"
 
 }

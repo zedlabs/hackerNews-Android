@@ -31,10 +31,7 @@ class MainActivity : AppCompatActivity(), StoryListAdapter.OnItemClickListener {
 
         viewModel.loadInitialDetails()
 
-        binding.recyclerView.apply {
-            adapter = this@MainActivity.storyAdapter
-            layoutManager = LinearLayoutManager(this@MainActivity)
-        }
+        binding.recyclerView.layoutManager = LinearLayoutManager(this)
 
         observeViewState()
     }
@@ -42,7 +39,7 @@ class MainActivity : AppCompatActivity(), StoryListAdapter.OnItemClickListener {
     private fun observeViewState() {
         viewModel.storyListViewState.observe(this) {
 
-           if (it.error != null) noInternetConnection()
+            if (it.error != null) noInternetConnection()
 
             it.stories?.let { storyList ->
                 //remove placeholder
