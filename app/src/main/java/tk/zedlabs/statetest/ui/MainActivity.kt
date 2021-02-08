@@ -32,16 +32,9 @@ class MainActivity : AppCompatActivity(), StoryListAdapter.OnItemClickListener {
 
         setContentView(binding.root)
 
-        when (this.isConnectedToNetwork()) {
-            true ->  viewModel.loadInitialDetails()
-            false -> {
-                binding.apply {
-                    root.showSnackBar(getString(R.string.no_connection))
-                    progressBar.visibility = View.GONE
-                }
+        viewModel.loadInitialDetails()
 
-            }
-        }
+        if (!this.isConnectedToNetwork())  noInternetConnection()
 
         binding.recyclerView.apply {
             adapter = this@MainActivity.storyAdapter
@@ -52,28 +45,38 @@ class MainActivity : AppCompatActivity(), StoryListAdapter.OnItemClickListener {
     }
 
     private fun observeViewState() {
-        viewModel.storyListViewState.observe(this){
+        viewModel.storyListViewState.observe(this) {
+
+            if (it.error != null) noInternetConnection()
 
             it.stories?.let { storyList ->
                 //remove placeholder
                 binding.progressBar.visibility = View.GONE
                 /* load data to RV */
-                if(storyList.isNotEmpty()){
+                if (storyList.isNotEmpty()) {
                     binding.recyclerView.apply {
                         this.makeFadeTransition(600)
                         adapter = storyAdapter.apply { submitList(storyList) }
                     }
-                }else{
+                } else {
                     Toast.makeText(this, "Failed to Load Data", Toast.LENGTH_SHORT).show()
                 }
 
             }
         }
     }
+
     /* use navigation component */
     override fun onItemClick(story: Story) {
         val i = Intent(this, WebViewActivity::class.java)
         i.putExtra("url", story.url)
         startActivity(i)
+    }
+
+    private fun noInternetConnection() {
+        binding.apply {
+            root.showSnackBar(getString(R.string.no_connection))
+            progressBar.visibility = View.GONE
+        }
     }
 }

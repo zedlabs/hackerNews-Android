@@ -1,5 +1,6 @@
 package tk.zedlabs.statetest.ui
 
+import android.util.Log
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.*
 import kotlinx.coroutines.async
@@ -24,7 +25,8 @@ class MainViewModel @ViewModelInject constructor(
                 stories = null
             )
     }
-    fun loadInitialDetails(){
+
+    fun loadInitialDetails() {
 
         viewModelScope.launch {
             async { loadStories() }.await()
@@ -33,9 +35,13 @@ class MainViewModel @ViewModelInject constructor(
     }
 
     private suspend fun loadStories() {
-        repository.getLatestNewsList().collect { storiesList ->
-            _storyListViewState.value = _storyListViewState.value?.copy(stories = storiesList)
-        }
+        repository.getLatestNewsList()
+            .catch { exception ->
+                _storyListViewState.value?.apply { copy(error = Error(exception)) }
+            }
+            .collect { storiesList ->
+                _storyListViewState.value?.apply { copy(stories = storiesList) }
+            }
     }
 
 
