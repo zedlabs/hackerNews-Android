@@ -14,8 +14,8 @@ class WebViewActivity : AppCompatActivity() {
 
         val intent = intent
         val url = intent.getStringExtra("url")
-        title = url?.stripUrl()
-        myWebView.loadUrl(url!!)
+        title = url?.stripUrl() ?: "No Url Provided"
+        myWebView.loadUrl(url ?: "")
 
     }
 }

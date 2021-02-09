@@ -38,7 +38,7 @@ class StoryListAdapter(private val listener: OnItemClickListener) :
             binding.apply {
                 titleTextView.text = story.title
                 rankTextView.text = adapterPosition.formattedPosition()
-                linkTextView.text = story.url.stripUrl()
+                linkTextView.text = story.url?.stripUrl()
                 infoTextView.text = Pair(story.score, story.by).pointsAndAuthorString()
             }
         }

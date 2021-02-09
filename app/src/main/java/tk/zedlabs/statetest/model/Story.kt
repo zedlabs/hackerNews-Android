@@ -12,6 +12,6 @@ data class Story (
     @field:Json(name = "time") var time : Int,
     @field:Json(name = "title") var title : String,
     @field:Json(name = "type") var type : String,
-    @field:Json(name = "url") var url : String
+    @field:Json(name = "url") var url : String?
 
 )

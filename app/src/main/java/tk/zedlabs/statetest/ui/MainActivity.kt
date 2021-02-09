@@ -1,17 +1,17 @@
 package tk.zedlabs.statetest.ui
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import androidx.activity.viewModels
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import tk.zedlabs.statetest.R
 import tk.zedlabs.statetest.databinding.ActivityMainBinding
 import tk.zedlabs.statetest.model.Story
 import tk.zedlabs.statetest.ui.webView.WebViewActivity
-import tk.zedlabs.statetest.util.showSnackBar
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity(), StoryListAdapter.OnItemClickListener {
@@ -26,7 +26,6 @@ class MainActivity : AppCompatActivity(), StoryListAdapter.OnItemClickListener {
         super.onCreate(savedInstanceState)
 
         binding = ActivityMainBinding.inflate(layoutInflater)
-
         setContentView(binding.root)
 
         viewModel.loadInitialDetails()
@@ -34,6 +33,7 @@ class MainActivity : AppCompatActivity(), StoryListAdapter.OnItemClickListener {
         binding.recyclerView.layoutManager = LinearLayoutManager(this)
 
         observeViewState()
+
     }
 
     private fun observeViewState() {
@@ -63,7 +63,11 @@ class MainActivity : AppCompatActivity(), StoryListAdapter.OnItemClickListener {
 
     private fun noInternetConnection() {
         binding.apply {
-            root.showSnackBar(getString(R.string.no_connection))
+            Snackbar.make(root, R.string.no_connection, Snackbar.LENGTH_INDEFINITE)
+                .setAction("Retry") {
+                    it.setOnClickListener {viewModel.loadInitialDetails() }
+                }.show()
+
             progressBar.visibility = View.GONE
         }
     }

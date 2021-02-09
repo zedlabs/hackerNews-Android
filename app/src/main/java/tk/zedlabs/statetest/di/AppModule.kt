@@ -18,11 +18,11 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun providesOkHttpClient() : OkHttpClient {
-        return OkHttpClient.Builder()
+    fun providesOkHttpClient(): OkHttpClient =
+        OkHttpClient.Builder()
             .addInterceptor(HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BASIC))
             .build()
-    }
+
 
     @Provides
     @Singleton
@@ -36,15 +36,11 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun providesJsonApi(retrofit: Retrofit): JsonApi {
-        return retrofit.create(JsonApi::class.java)
-    }
+    fun providesJsonApi(retrofit: Retrofit): JsonApi = retrofit.create(JsonApi::class.java)
+
 
     @Provides
     @Singleton
-    fun providePostDataSource(
-        jsonApi: JsonApi
-    ): MainRepository {
-        return MainRepository(jsonApi)
-    }
+    fun providePostDataSource(jsonApi: JsonApi): MainRepository = MainRepository(jsonApi)
+
 }
