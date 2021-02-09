@@ -19,6 +19,15 @@ fun String.stripUrl(): String? {
 
 }
 
+fun View.show(){
+    if(this.visibility == View.GONE || this.visibility == View.INVISIBLE)
+        this.visibility = View.VISIBLE
+}
+
+fun View.remove(){
+        this.visibility = View.GONE
+}
+
 fun Int.formattedPosition(): String = (this + 1).toString() + "."
 
 

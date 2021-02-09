@@ -2,15 +2,17 @@ package tk.zedlabs.statetest.ui
 
 import android.content.Intent
 import android.os.Bundle
-import android.view.View.GONE
-import android.view.View.VISIBLE
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
 import tk.zedlabs.statetest.databinding.ActivityMainBinding
 import tk.zedlabs.statetest.model.Story
+import tk.zedlabs.statetest.repository.MainRepository
 import tk.zedlabs.statetest.ui.webView.WebViewActivity
+import tk.zedlabs.statetest.util.makeFadeTransition
+import tk.zedlabs.statetest.util.remove
+import tk.zedlabs.statetest.util.show
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity(), StoryListAdapter.OnItemClickListener {
@@ -36,20 +38,23 @@ class MainActivity : AppCompatActivity(), StoryListAdapter.OnItemClickListener {
     private fun observeViewState() {
         viewModel.storyListViewState.observe(this) {
 
-            if (it.error != null) noInternetConnection()
+            if (it.error != null) binding.reloadInternetButton.show()
 
             it.stories?.let { storyList ->
-                //remove placeholder
-                binding.apply {
-                    reloadInternetButton.visibility = GONE
-                    progressBar.visibility = GONE
-                }
-                /* load data to RV */
-                if (storyList.isNotEmpty()) {
-                    binding.recyclerView.apply {
-                        adapter = storyAdapter.apply { submitList(storyList) }
+                /* remove placeholder */
+                binding.reloadInternetButton.remove()
+
+                if (storyList.size == MainRepository.CONTENT_SIZE) {
+                    binding.progressBar.remove()
+                    binding.recyclerView.makeFadeTransition(500)
+                    /* load data to RV */
+                    if (storyList.isNotEmpty()) {
+                        binding.recyclerView.apply {
+                            adapter = storyAdapter.apply { submitList(storyList) }
+                        }
                     }
                 }
+
             }
         }
     }
@@ -61,10 +66,4 @@ class MainActivity : AppCompatActivity(), StoryListAdapter.OnItemClickListener {
         startActivity(i)
     }
 
-    private fun noInternetConnection() {
-        binding.apply {
-            reloadInternetButton.visibility = VISIBLE
-            progressBar.visibility = GONE
-        }
-    }
 }

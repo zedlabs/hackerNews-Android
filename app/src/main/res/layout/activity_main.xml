@@ -10,12 +10,13 @@
         android:id="@+id/reloadInternetButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
         android:text="@string/no_internet_connection"
+        android:visibility="gone"
         app:cornerRadius="22dp"
         app:icon="@drawable/ic_round_refresh"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        android:visibility="gone"
         app:layout_constraintTop_toTopOf="@+id/progressBar" />
 
     <androidx.recyclerview.widget.RecyclerView

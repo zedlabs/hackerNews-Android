@@ -2,7 +2,8 @@ package tk.zedlabs.statetest.repository
 
 import android.util.Log
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.withContext
 import tk.zedlabs.statetest.data.JsonApi
 import tk.zedlabs.statetest.model.Story
@@ -22,7 +23,7 @@ class MainRepository @Inject constructor(
 
         //fetch the top 20 results from the api and parse it to the list
         idList
-            ?.subList(0, 20)
+            ?.subList(START_POSITION, CONTENT_SIZE)
             ?.forEach {
                 val storyItem = api.getStory(it.toString()).body()
                 storyList.add(storyItem!!)
@@ -31,4 +32,8 @@ class MainRepository @Inject constructor(
             }
     }
 
+    companion object{
+        const val START_POSITION = 0
+        const val CONTENT_SIZE = 20
+    }
 }
