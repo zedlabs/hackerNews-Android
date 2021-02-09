@@ -5,7 +5,7 @@
 #
 
 #### Tech Stack:
-  - Koltin 
+  - Kotlin 
   - Android Architecture Components
   - MVVM architecture 
   - Coroutines + kotlin Flows
