@@ -27,8 +27,6 @@ class MainActivity : AppCompatActivity(), StoryListAdapter.OnItemClickListener {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        viewModel.loadInitialDetails()
-
         binding.recyclerView.layoutManager = LinearLayoutManager(this)
         binding.reloadInternetButton.setOnClickListener { viewModel.loadInitialDetails() }
         observeViewState()
