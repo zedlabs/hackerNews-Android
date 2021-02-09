@@ -1,6 +1,5 @@
 package tk.zedlabs.statetest.ui
 
-import android.util.Log
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.*
 import kotlinx.coroutines.async

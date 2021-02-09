@@ -2,13 +2,12 @@ package tk.zedlabs.statetest.ui
 
 import android.content.Intent
 import android.os.Bundle
-import android.view.View
+import android.view.View.GONE
+import android.view.View.VISIBLE
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
-import tk.zedlabs.statetest.R
 import tk.zedlabs.statetest.databinding.ActivityMainBinding
 import tk.zedlabs.statetest.model.Story
 import tk.zedlabs.statetest.ui.webView.WebViewActivity
@@ -31,7 +30,7 @@ class MainActivity : AppCompatActivity(), StoryListAdapter.OnItemClickListener {
         viewModel.loadInitialDetails()
 
         binding.recyclerView.layoutManager = LinearLayoutManager(this)
-
+        binding.reloadInternetButton.setOnClickListener { viewModel.loadInitialDetails() }
         observeViewState()
 
     }
@@ -43,7 +42,10 @@ class MainActivity : AppCompatActivity(), StoryListAdapter.OnItemClickListener {
 
             it.stories?.let { storyList ->
                 //remove placeholder
-                binding.progressBar.visibility = View.GONE
+                binding.apply {
+                    reloadInternetButton.visibility = GONE
+                    progressBar.visibility = GONE
+                }
                 /* load data to RV */
                 if (storyList.isNotEmpty()) {
                     binding.recyclerView.apply {
@@ -63,12 +65,8 @@ class MainActivity : AppCompatActivity(), StoryListAdapter.OnItemClickListener {
 
     private fun noInternetConnection() {
         binding.apply {
-            Snackbar.make(root, R.string.no_connection, Snackbar.LENGTH_INDEFINITE)
-                .setAction("Retry") {
-                    it.setOnClickListener {viewModel.loadInitialDetails() }
-                }.show()
-
-            progressBar.visibility = View.GONE
+            reloadInternetButton.visibility = VISIBLE
+            progressBar.visibility = GONE
         }
     }
 }
