@@ -8,6 +8,9 @@ import kotlinx.coroutines.withContext
 import tk.zedlabs.statetest.data.JsonApi
 import tk.zedlabs.statetest.model.Story
 import javax.inject.Inject
+import kotlin.system.measureTimeMillis
+import kotlin.time.ExperimentalTime
+import kotlin.time.measureTime
 
 class MainRepository @Inject constructor(
     private val api: JsonApi
@@ -17,22 +20,25 @@ class MainRepository @Inject constructor(
         val storyList = mutableListOf<Story>()
 
         //fetch the latest idList from the HN api
-        val idList = withContext(Dispatchers.Default) {
-            api.getStoryIdList().body()
-        }
-
-        //fetch the top 20 results from the api and parse it to the list
-        idList
-            ?.subList(START_POSITION, CONTENT_SIZE)
-            ?.forEach {
-                val storyItem = api.getStory(it.toString()).body()
-                storyList.add(storyItem!!)
-                emit(storyList)
-                Log.e(" repository//fetching: ", "$storyItem")
+        val t = measureTimeMillis {
+            val idList = withContext(Dispatchers.Default) {
+                api.getStoryIdList().body()
             }
+
+            //fetch the top 20 results from the api and parse it to the list
+            idList
+                ?.subList(START_POSITION, CONTENT_SIZE)
+                ?.forEach {
+                    val storyItem = api.getStory(it.toString()).body()
+                    storyList.add(storyItem!!)
+                    emit(storyList)
+                    Log.e(" repository//fetching: ", "$storyItem")
+                }
+        }
+        Log.e("1.time", " time in s = ${(t.toFloat()/1000)}")
     }
 
-    companion object{
+    companion object {
         const val START_POSITION = 0
         const val CONTENT_SIZE = 20
     }

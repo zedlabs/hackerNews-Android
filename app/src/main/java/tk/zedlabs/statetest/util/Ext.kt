@@ -2,9 +2,11 @@ package tk.zedlabs.statetest.util
 
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ProgressBar
 import androidx.transition.TransitionManager
 import com.google.android.material.snackbar.Snackbar
 import tk.zedlabs.statetest.R
+import tk.zedlabs.statetest.databinding.ActivityMainBinding
 import java.net.URI
 
 fun ViewGroup.makeFadeTransition(animationDuration: Long) {
@@ -37,5 +39,11 @@ fun Pair<Int, String>.pointsAndAuthorString(): String =
 fun View.showSnackBar(text: String) {
     Snackbar.make(this, R.string.no_connection, Snackbar.LENGTH_INDEFINITE)
         .show()
+}
+
+fun ActivityMainBinding.updateProgress(size: Int){
+    if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
+        this.progressBar.setProgress(size*5, true)
+    }
 }
 

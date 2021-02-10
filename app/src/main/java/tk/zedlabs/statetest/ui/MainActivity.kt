@@ -1,7 +1,9 @@
 package tk.zedlabs.statetest.ui
 
+import android.animation.ObjectAnimator
 import android.content.Intent
 import android.os.Bundle
+import android.view.animation.LinearInterpolator
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -13,6 +15,8 @@ import tk.zedlabs.statetest.ui.webView.WebViewActivity
 import tk.zedlabs.statetest.util.makeFadeTransition
 import tk.zedlabs.statetest.util.remove
 import tk.zedlabs.statetest.util.show
+import tk.zedlabs.statetest.util.updateProgress
+
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity(), StoryListAdapter.OnItemClickListener {
@@ -22,17 +26,20 @@ class MainActivity : AppCompatActivity(), StoryListAdapter.OnItemClickListener {
     private val viewModel: MainViewModel by viewModels()
     private val storyAdapter = StoryListAdapter(this)
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        binding.recyclerView.layoutManager = LinearLayoutManager(this)
-        binding.reloadInternetButton.setOnClickListener { viewModel.loadInitialDetails() }
+        binding.apply {
+            recyclerView.apply {
+                layoutManager = LinearLayoutManager(this@MainActivity)
+                setHasFixedSize(true)
+            }
+            reloadInternetButton.setOnClickListener { viewModel.loadInitialDetails() }
+        }
         observeViewState()
-
     }
 
     private fun observeViewState() {
@@ -42,20 +49,25 @@ class MainActivity : AppCompatActivity(), StoryListAdapter.OnItemClickListener {
 
             it.stories?.let { storyList ->
                 /* remove placeholder */
-                binding.reloadInternetButton.remove()
+                binding.updateProgress(storyList.size)
 
                 if (storyList.size == MainRepository.CONTENT_SIZE) {
-                    binding.progressBar.remove()
-                    binding.recyclerView.makeFadeTransition(500)
+                    hideLoadingIndicators()
                     /* load data to RV */
-                    if (storyList.isNotEmpty()) {
                         binding.recyclerView.apply {
                             adapter = storyAdapter.apply { submitList(storyList) }
                         }
-                    }
                 }
 
             }
+        }
+    }
+
+    private fun hideLoadingIndicators() {
+        binding.reloadInternetButton.remove()
+        binding.progressBar.apply {
+            binding.root.makeFadeTransition(300)
+            remove()
         }
     }
 

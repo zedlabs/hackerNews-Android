@@ -10,6 +10,7 @@ import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import tk.zedlabs.statetest.repository.MainRepository
+import kotlin.time.ExperimentalTime
 
 class MainViewModel @ViewModelInject constructor(
     private val repository: MainRepository
