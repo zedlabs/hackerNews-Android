@@ -1,11 +1,10 @@
 package tk.zedlabs.statetest.ui
 
-import android.animation.ObjectAnimator
 import android.content.Intent
 import android.os.Bundle
-import android.view.animation.LinearInterpolator
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.observe
 import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
 import tk.zedlabs.statetest.databinding.ActivityMainBinding
