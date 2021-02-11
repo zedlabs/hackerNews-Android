@@ -25,7 +25,7 @@ buildscript {
         navigationVersion = "2.3.1"
         roomVersion = "2.2.5"
         testExtJunitVersion = "1.1.2"
-        kotlinVersion = "1.0.0-alpha10"
+        kotlinVersion = "1.0.0-alpha12"
     }
 
     repositories {
