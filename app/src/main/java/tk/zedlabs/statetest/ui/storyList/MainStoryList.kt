@@ -27,42 +27,46 @@ fun storyList(list: List<Story>) {
 
 @Composable
 fun listItem(index: Int, item: Story) {
-    Row {
-        Spacer(modifier = Modifier.width(10.dp))
-        Text(
-            text = index.formattedPosition(),
-            fontSize = 16.sp,
-            color = Color.White,
-        )
-        Spacer(modifier = Modifier.width(10.dp))
-        Column(modifier = Modifier.padding(0.dp, 0.dp, 10.dp, 0.dp)) {
+    Column() {
+        Row {
+            Spacer(modifier = Modifier.width(20.dp))
             Text(
-                text = item.title,
-                maxLines = 2,
-                overflow = TextOverflow.Ellipsis,
+                text = index.formattedPosition(),
                 fontSize = 16.sp,
                 color = Color.White,
             )
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceBetween
-            ) {
+            Spacer(modifier = Modifier.width(10.dp))
+            Column(modifier = Modifier.padding(0.dp, 0.dp, 10.dp, 0.dp)) {
                 Text(
-                    text = item.url?.stripUrl()!!,
-                    maxLines = 1,
-                    fontSize = 12.sp,
-                    color = Color.Yellow,
-                )
-                Text(
-                    text = Pair(item.score, item.by).pointsAndAuthorString(),
-                    maxLines = 1,
+                    text = item.title,
+                    maxLines = 2,
                     overflow = TextOverflow.Ellipsis,
-                    fontSize = 12.sp,
-                    color = Color.Gray,
+                    fontSize = 16.sp,
+                    color = Color.White,
                 )
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween
+                ) {
+                    Text(
+                        text = item.url?.stripUrl()!!,
+                        maxLines = 1,
+                        fontSize = 12.sp,
+                        color = Color.Yellow,
+                    )
+                    Text(
+                        text = Pair(item.score, item.by).pointsAndAuthorString(),
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis,
+                        fontSize = 12.sp,
+                        color = Color.Gray,
+                    )
 
+                }
             }
         }
+        Spacer(modifier = Modifier.height(10.dp))
     }
-    Spacer(modifier = Modifier.width(20.dp))
+
+
 }
