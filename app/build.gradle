@@ -46,8 +46,8 @@ android {
     }
 
     composeOptions {
-        kotlinCompilerVersion '1.4.21'
-        kotlinCompilerExtensionVersion '1.0.0-alpha10'
+        kotlinCompilerVersion '1.4.21-2'
+        kotlinCompilerExtensionVersion '1.0.0-alpha11'
     }
 }
 
@@ -69,9 +69,9 @@ dependencies {
     implementation "androidx.fragment:fragment-ktx:$fragmentVersion"
 
     // Lifecycle + ViewModel & LiveData
-    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycleVersion"
-    implementation "androidx.lifecycle:lifecycle-livedata-ktx:$lifecycleVersion"
-    implementation "android.arch.lifecycle:common-java8:$lifecycleVersion"
+//    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycleVersion"
+//    implementation "androidx.lifecycle:lifecycle-livedata-ktx:$lifecycleVersion"
+//    implementation "android.arch.lifecycle:common-java8:$lifecycleVersion"
 
     // Navigation Component
     implementation "androidx.navigation:navigation-fragment-ktx:$navigationVersion"
@@ -107,15 +107,12 @@ dependencies {
 //      implementation "androidx.datastore:datastore-preferences:$dataStoreVersion"
 
     // JetPack Compose
-    implementation "androidx.compose.ui:ui:$kotlinVersion"
-    // Tooling support (Previews, etc.)
-    implementation "androidx.compose.ui:ui-tooling:$kotlinVersion"
-    // Foundation (Border, Background, Box, Image, Scroll, shapes, animations, etc.)
-    implementation "androidx.compose.foundation:foundation:$kotlinVersion"
-    // Material Design
-    implementation "androidx.compose.material:material:$kotlinVersion"
-    // Material design icons
-//  implementation "androidx.compose.material:material-icons-core:$kotlinVersion"
-//  implementation "androidx.compose.material:material-icons-extended:$kotlinVersion"
+    implementation "androidx.compose.ui:ui:$compose"
+    implementation "androidx.compose.foundation:foundation:$compose"
+    implementation "androidx.compose.runtime:runtime-livedata:$compose"
+    implementation "androidx.compose.runtime:runtime-rxjava2:$compose"
+    implementation "androidx.compose.material:material:$compose"
+    implementation "androidx.compose.material:material-icons-core:$compose"
+    implementation "androidx.compose.material:material-icons-extended:$compose"
 
 }

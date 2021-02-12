@@ -15,27 +15,24 @@ import kotlin.time.measureTime
 class MainRepository @Inject constructor(
     private val api: JsonApi
 ) {
-    suspend fun getLatestNewsList(): Flow<List<Story>> = flow {
 
+    suspend fun getLatestNews(): List<Story> {
         val storyList = mutableListOf<Story>()
 
         //fetch the latest idList from the HN api
-        val t = measureTimeMillis {
-            val idList = withContext(Dispatchers.Default) {
-                api.getStoryIdList().body()
-            }
-
-            //fetch the top 20 results from the api and parse it to the list
-            idList
-                ?.subList(START_POSITION, CONTENT_SIZE)
-                ?.forEach {
-                    val storyItem = api.getStory(it.toString()).body()
-                    storyList.add(storyItem!!)
-                    emit(storyList)
-                    Log.e(" repository//fetching: ", "$storyItem")
-                }
+        val idList = withContext(Dispatchers.IO) {
+            api.getStoryIdList().body()
         }
-        Log.e("1.time", " time in s = ${(t.toFloat()/1000)}")
+
+        //fetch the top 20 results from the api and parse it to the list
+        idList
+            ?.subList(START_POSITION, CONTENT_SIZE)
+            ?.forEach {
+                val storyItem = api.getStory(it.toString()).body()
+                storyList.add(storyItem!!)
+                Log.e(" repository//fetching: ", "$storyItem")
+            }
+        return storyList
     }
 
     companion object {
