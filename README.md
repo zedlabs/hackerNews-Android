@@ -1,6 +1,6 @@
 ## hackerNews-Android
 
-#### minimal android client for news.ycombinator.com, made as a test implementation for kotlin flows 
+#### minimal android client for news.ycombinator.com, made as a test implementation for kotlin flows (the implementation using compose is under compose-impl branch)
 
 #
 
