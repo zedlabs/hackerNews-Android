@@ -6,6 +6,7 @@
 
 #### Tech Stack:
   - Kotlin 
+  - Jetpack Compose
   - Android Architecture Components
   - MVVM architecture 
   - Coroutines + kotlin Flows
