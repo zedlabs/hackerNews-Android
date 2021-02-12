@@ -2,15 +2,10 @@ package tk.zedlabs.statetest.repository
 
 import android.util.Log
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.withContext
 import tk.zedlabs.statetest.data.JsonApi
 import tk.zedlabs.statetest.model.Story
 import javax.inject.Inject
-import kotlin.system.measureTimeMillis
-import kotlin.time.ExperimentalTime
-import kotlin.time.measureTime
 
 class MainRepository @Inject constructor(
     private val api: JsonApi
@@ -30,7 +25,7 @@ class MainRepository @Inject constructor(
             ?.forEach {
                 val storyItem = api.getStory(it.toString()).body()
                 storyList.add(storyItem!!)
-                Log.e(" repository//fetching: ", "$storyItem")
+                Log.e(" repository//fetching: ", "${storyItem.title}")
             }
         return storyList
     }

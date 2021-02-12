@@ -14,11 +14,12 @@ class MainViewModel @ViewModelInject constructor(
 ) : ViewModel() {
 
     val storyList: MutableState<List<Story>> = mutableStateOf(listOf())
-
+    val loading : MutableState<Boolean> = mutableStateOf(false)
     init {
         viewModelScope.launch {
-            val result = repository.getLatestNews()
-            storyList.value = result
+            loading.value = true
+            storyList.value = repository.getLatestNews()
+            loading.value = false
         }
     }
 }

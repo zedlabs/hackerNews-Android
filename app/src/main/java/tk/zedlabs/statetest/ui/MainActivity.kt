@@ -22,7 +22,8 @@ class MainActivity : AppCompatActivity(){
         setContent {
             MaterialTheme() {
                 val news = viewModel.storyList.value
-                storyList(list = news)
+                val loadingValue = viewModel.loading.value
+                storyList(list = news, loading = loadingValue)
             }
 
         }

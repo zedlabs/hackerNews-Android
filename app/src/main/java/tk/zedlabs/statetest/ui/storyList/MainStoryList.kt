@@ -1,5 +1,6 @@
 package tk.zedlabs.statetest.ui.storyList
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
@@ -11,24 +12,32 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import tk.zedlabs.statetest.model.Story
+import tk.zedlabs.statetest.ui.utilities.progressBar
 import tk.zedlabs.statetest.util.formattedPosition
 import tk.zedlabs.statetest.util.pointsAndAuthorString
 import tk.zedlabs.statetest.util.stripUrl
 
 @Composable
-fun storyList(list: List<Story>) {
+fun storyList(list: List<Story>, loading: Boolean) {
 
-    LazyColumn {
-        itemsIndexed(items = list) { index, story ->
-            listItem(index, story)
+    Column {
+        progressBar(isDisplayed = loading)
+        Spacer(modifier = Modifier.height(10.dp))
+        LazyColumn {
+            itemsIndexed(items = list) { index, story ->
+                listItem(index, story)
+            }
         }
+
     }
 }
 
 @Composable
 fun listItem(index: Int, item: Story) {
-    Column() {
-        Row {
+    Column {
+        Row(modifier = Modifier.clickable {
+
+        }) {
             Spacer(modifier = Modifier.width(20.dp))
             Text(
                 text = index.formattedPosition(),
