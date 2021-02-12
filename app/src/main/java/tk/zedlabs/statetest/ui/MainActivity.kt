@@ -13,7 +13,7 @@ import tk.zedlabs.statetest.ui.webView.WebViewActivity
 
 
 @AndroidEntryPoint
-class MainActivity : AppCompatActivity(), StoryListAdapter.OnItemClickListener {
+class MainActivity : AppCompatActivity(){
 
     private val viewModel: MainViewModel by viewModels()
 
@@ -29,10 +29,10 @@ class MainActivity : AppCompatActivity(), StoryListAdapter.OnItemClickListener {
     }
 
     /* use navigation component */
-    override fun onItemClick(story: Story) {
-        val i = Intent(this, WebViewActivity::class.java)
-        i.putExtra("url", story.url)
-        startActivity(i)
-    }
+//    override fun onItemClick(story: Story) {
+//        val i = Intent(this, WebViewActivity::class.java)
+//        i.putExtra("url", story.url)
+//        startActivity(i)
+//    }
 
 }
