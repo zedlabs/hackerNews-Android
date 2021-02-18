@@ -15,6 +15,7 @@ import tk.zedlabs.statetest.data.JsonApi
 import tk.zedlabs.statetest.local_db.StoryDao
 import tk.zedlabs.statetest.local_db.StoryDatabase
 import tk.zedlabs.statetest.repository.MainRepository
+import tk.zedlabs.statetest.repository.RemoteDataSource
 import javax.inject.Singleton
 
 @Module
@@ -46,7 +47,16 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun providePostDataSource(jsonApi: JsonApi): MainRepository = MainRepository(jsonApi)
+    fun provideRemoteDataSource(jsonApi: JsonApi): RemoteDataSource = RemoteDataSource(jsonApi)
+
+
+    @Provides
+    @Singleton
+    fun provideMainRepository(
+        remoteDataSource: RemoteDataSource,
+        storyDao: StoryDao
+    ): MainRepository = MainRepository(remoteDataSource, storyDao)
+
 
     @Provides
     @Singleton

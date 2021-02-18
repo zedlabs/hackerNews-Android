@@ -8,9 +8,11 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import tk.zedlabs.statetest.R
 import tk.zedlabs.statetest.model.Story
 import tk.zedlabs.statetest.ui.utilities.progressBar
 import tk.zedlabs.statetest.util.formattedPosition
@@ -25,12 +27,16 @@ fun storyList(list: List<Story>, loading: Boolean) {
         Spacer(modifier = Modifier.height(10.dp))
         LazyColumn {
             itemsIndexed(items = list) { index, story ->
-                listItem(index, story)
-                Spacer(modifier = Modifier.width(20.dp))
+
+                Column {
+                    listItem(index, story)
+                    Spacer(modifier = Modifier.height(10.dp))
+                }
+
             }
         }
-
     }
+
 }
 
 @Composable
@@ -59,7 +65,8 @@ fun listItem(index: Int, item: Story) {
                     horizontalArrangement = Arrangement.SpaceBetween
                 ) {
                     Text(
-                        text = item.url?.stripUrl() ?: "",
+                        text = item.url?.stripUrl()
+                            ?: stringResource(R.string.default_story_author),
                         maxLines = 1,
                         fontSize = 12.sp,
                         color = Color.Yellow,

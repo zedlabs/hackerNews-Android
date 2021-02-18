@@ -2,4 +2,5 @@
     <string name="app_name">HackerNews - Top 20 stories</string>
     <string name="no_connection">Not Internet Connection</string>
     <string name="no_internet_connection">No Internet Connection</string>
+    <string name="default_story_author">HN Team</string>
 </resources>

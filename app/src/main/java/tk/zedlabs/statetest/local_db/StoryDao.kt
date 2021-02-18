@@ -8,8 +8,8 @@ import tk.zedlabs.statetest.model.Story
 interface StoryDao {
 
     @Query("SELECT * FROM story")
-    fun getAll(): List<Story>
+    suspend fun getAll(): List<Story>
 
     @Query("SELECT url FROM story WHERE id = :currentId")
-    fun getStory(currentId: Int): String
+    suspend fun getStory(currentId: Int): String
 }

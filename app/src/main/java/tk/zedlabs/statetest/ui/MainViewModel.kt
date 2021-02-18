@@ -18,7 +18,7 @@ class MainViewModel @ViewModelInject constructor(
     init {
         viewModelScope.launch {
             loading.value = true
-            storyList.value = repository.getLatestNews()
+            storyList.value = repository.getCachedNews()
             loading.value = false
         }
     }

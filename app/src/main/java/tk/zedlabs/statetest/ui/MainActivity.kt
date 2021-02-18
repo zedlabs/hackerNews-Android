@@ -5,7 +5,9 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.material.MaterialTheme
 import androidx.compose.ui.platform.setContent
+import androidx.room.Room
 import dagger.hilt.android.AndroidEntryPoint
+import tk.zedlabs.statetest.local_db.StoryDatabase
 import tk.zedlabs.statetest.ui.storyList.storyList
 
 
@@ -22,8 +24,12 @@ class MainActivity : AppCompatActivity(){
                 val loadingValue = viewModel.loading.value
                 storyList(list = news, loading = loadingValue)
             }
-
         }
+        val room = Room
+            .databaseBuilder(application, StoryDatabase::class.java, "story-database")
+            .fallbackToDestructiveMigration()
+            .build()
+        
     }
 
     /* use navigation component */
