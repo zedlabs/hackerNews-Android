@@ -12,8 +12,7 @@
   - Coroutines + kotlin Flows
   - Dagger Hilt
   - retrofit + moshi converter
-  
-  
+  - Room (Db Caching)
   
   
 #
