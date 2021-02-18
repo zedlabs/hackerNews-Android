@@ -4,7 +4,6 @@ import android.util.Log
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import tk.zedlabs.statetest.data.JsonApi
-import tk.zedlabs.statetest.local_db.StoryDao
 import tk.zedlabs.statetest.model.Story
 import javax.inject.Inject
 
