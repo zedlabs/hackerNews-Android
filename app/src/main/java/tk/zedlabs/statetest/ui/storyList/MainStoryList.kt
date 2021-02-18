@@ -26,6 +26,7 @@ fun storyList(list: List<Story>, loading: Boolean) {
         LazyColumn {
             itemsIndexed(items = list) { index, story ->
                 listItem(index, story)
+                Spacer(modifier = Modifier.width(20.dp))
             }
         }
 
@@ -58,7 +59,7 @@ fun listItem(index: Int, item: Story) {
                     horizontalArrangement = Arrangement.SpaceBetween
                 ) {
                     Text(
-                        text = item.url?.stripUrl()!!,
+                        text = item.url?.stripUrl() ?: "",
                         maxLines = 1,
                         fontSize = 12.sp,
                         color = Color.Yellow,
