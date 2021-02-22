@@ -1,6 +1,7 @@
 package tk.zedlabs.statetest.ui
 
 import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.ViewModel
@@ -18,21 +19,26 @@ class MainViewModel @ViewModelInject constructor(
     private val storyDao: StoryDao,
 ) : ViewModel() {
 
-    val storyList: MutableState<List<Story>> = mutableStateOf(listOf())
-    val loading : MutableState<Boolean> = mutableStateOf(false)
+    val storyList: State<List<Story>>
+        get() = _storyList
+    private var _storyList: MutableState<List<Story>> = mutableStateOf(listOf())
+
+    val loading: State<Boolean>
+        get() = _loading
+    private var _loading: MutableState<Boolean> = mutableStateOf(false)
 
     init {
         viewModelScope.launch {
-            loading.value = true
-            storyList.value = repository.getCachedNews()
+            _loading.value = true
+            _storyList.value = repository.getCachedNews()
             delay(1000)
-            loading.value = false
+            _loading.value = false
             updateCache()
         }
     }
 
-    private suspend fun updateCache(){
-        withContext(Dispatchers.IO){
+    private suspend fun updateCache() {
+        withContext(Dispatchers.IO) {
             val newList = repository.getLatestNews()
             storyDao.deleteAll()
 
@@ -40,10 +46,10 @@ class MainViewModel @ViewModelInject constructor(
                 storyDao.insertAll(story)
             }
 
-            loading.value = true
-            storyList.value = repository.getCachedNews()
+            _loading.value = true
+            _storyList.value = repository.getCachedNews()
             delay(1000)
-            loading.value = false
+            _loading.value = false
         }
 
     }

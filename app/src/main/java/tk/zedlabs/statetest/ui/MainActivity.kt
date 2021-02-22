@@ -17,10 +17,10 @@ class MainActivity : AppCompatActivity(){
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            MaterialTheme() {
+            MaterialTheme {
                 val news = viewModel.storyList.value
                 val loadingValue = viewModel.loading.value
-                storyList(list = news, loading = loadingValue)
+                storyList(list = news, loading = loadingValue, {})
             }
         }
 
