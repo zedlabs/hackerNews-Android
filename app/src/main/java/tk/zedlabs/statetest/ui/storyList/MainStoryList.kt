@@ -1,5 +1,6 @@
 package tk.zedlabs.statetest.ui.storyList
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -13,9 +14,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.ui.tooling.preview.Preview
-import androidx.ui.tooling.preview.PreviewParameter
-import com.google.android.material.card.MaterialCardView
 import tk.zedlabs.statetest.R
 import tk.zedlabs.statetest.model.Story
 import tk.zedlabs.statetest.ui.utilities.progressBar
@@ -46,15 +44,19 @@ fun storyList(
     }
 
 }
+
 @Composable
 fun listItem(index: Int, item: Story) {
 
-    Card() {
-        Column(modifier = Modifier.clickable(true, onClick = {})) {
-            Row(modifier = Modifier.clickable {
-
-            }) {
-                Spacer(modifier = Modifier.width(20.dp))
+    Card(
+        Modifier.clickable(true, onClick = {})
+            .padding(12.dp, 12.dp, 12.dp, 0.dp)
+    ) {
+        Column(
+            Modifier.background(Color.DarkGray)
+                .padding(6.dp)
+        ) {
+            Row {
                 Text(
                     text = index.formattedPosition(),
                     fontSize = 16.sp,
@@ -69,6 +71,7 @@ fun listItem(index: Int, item: Story) {
                         fontSize = 16.sp,
                         color = Color.White,
                     )
+                    Spacer(modifier = Modifier.height(8.dp))
                     Row(
                         modifier = Modifier.fillMaxWidth(),
                         horizontalArrangement = Arrangement.SpaceBetween
@@ -94,7 +97,6 @@ fun listItem(index: Int, item: Story) {
             Spacer(modifier = Modifier.height(10.dp))
         }
     }
-
 
 
 }
